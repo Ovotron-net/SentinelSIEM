@@ -17,6 +17,19 @@ SentinelSIEM aims to give small security teams and hobbyist blue-teamers a self-
 
 The project is intentionally modular: the pieces that ingest and process logs, the API that serves data, and the dashboard that visualizes it are separated so any piece can be swapped, scaled, or run independently.
 
+
+## Project Management
+
+SentinelSIEM uses GitHub's built-in project management features to plan, track, and review development.
+
+* **GitHub Issues** are used to track features, bugs, enhancements, and technical tasks.
+* **GitHub Projects** are used to organize work by sprint and monitor development progress.
+* **Milestones** group issues into planned releases (e.g., `v0.2`, `v0.3`).
+* **Pull Requests** are required for all code changes and serve as the primary code review mechanism.
+
+The `docs/` directory is reserved for long-lived technical documentation such as architecture, engineering decisions, API documentation, roadmaps, and design artifacts. To avoid duplicate sources of truth, task tracking documentation is maintained exclusively through GitHub Issues rather than Markdown files within the repository.
+
+
 ## Features
 
 - 🔍 **Real-time log ingestion** and event processing pipeline
