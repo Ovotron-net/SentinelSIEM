@@ -16,7 +16,7 @@ The format is based on **Keep a Changelog**, and this project adheres to **Seman
 
 ---
 
-## [v0.1.0] - 2026-07-07
+## [v0.1.0] - 2026-07-07 (YYYY-MM-DD)
 
 ### Added
 
@@ -72,6 +72,13 @@ The format is based on **Keep a Changelog**, and this project adheres to **Seman
 * Began using GitHub Projects and Milestones for sprint and release planning.
 
 ---
+
+## [v0.1.0] - 2026-07-11 (YYYY-MM-DD)
+
+### Decision
+
+* Adopted Python 3.13 as the minimum supported Python version.
+-> Allows SentinelSIEM to leverage modern Python features such as StrEnum, improved typing, and recent  standard library enhancements while keeping the codebase clean and dependency-free.
 
 <!--
 Release Format
