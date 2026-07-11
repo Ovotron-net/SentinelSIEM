@@ -1,45 +1,97 @@
+"""
+Utility functions for generating and formatting UTC timestamps.
+
+This module provides reusable helpers for working with timezone-aware
+timestamps throughout SentinelSIEM. Timestamp generation and formatting
+are intentionally kept separate to promote flexibility and maintainability.
+"""
+
+from __future__ import annotations
+
 import random
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 
 
-def get_current_utc_timestamp():
-    current_time = datetime.now(timezone.utc)
-    return iso8601_formatting(current_time)
+def get_current_utc_timestamp() -> datetime:
+    """Return the current UTC timestamp.
+
+    Returns:
+        datetime: The current timezone-aware UTC datetime.
+    """
+    return datetime.now(timezone.utc)
 
 
-def iso8601_formatting(timestamp):
-    iso_string = timestamp.isoformat().replace("+00:00", "Z")
-    return iso_string
+def format_iso8601(timestamp: datetime) -> str:
+    """Convert a datetime object to an ISO 8601 formatted string.
+
+    UTC timestamps are represented using the 'Z' suffix.
+
+    Args:
+        timestamp: A timezone-aware datetime object.
+
+    Returns:
+        str: The timestamp formatted as an ISO 8601 string.
+
+    Raises:
+        ValueError: If the provided datetime is not timezone-aware.
+    """
+    if timestamp.tzinfo is None:
+        raise ValueError("Timestamp must be timezone-aware.")
+
+    return timestamp.isoformat().replace("+00:00", "Z")
 
 
-# This function generates a single timestamp
-def generate_random_timestamp(start_time, end_time):
+def generate_random_timestamp(
+    start_time: datetime,
+    end_time: datetime,
+) -> datetime:
+    """Generate a random timestamp between two UTC datetimes.
+
+    Args:
+        start_time: The earliest possible timestamp.
+        end_time: The latest possible timestamp.
+
+    Returns:
+        datetime: A randomly generated timezone-aware datetime.
+
+    Raises:
+        ValueError: If the timestamps are invalid or not timezone-aware.
+    """
+    if start_time.tzinfo is None or end_time.tzinfo is None:
+        raise ValueError("Both timestamps must be timezone-aware.")
+
     if start_time >= end_time:
-        raise ValueError("start_time must be before end_time")
+        raise ValueError("start_time must be before end_time.")
 
-    time_difference = end_time - start_time
-    total_seconds = int(time_difference.total_seconds())
+    total_seconds = int((end_time - start_time).total_seconds())
     random_seconds = random.randint(0, total_seconds)
-    new_time = start_time + timedelta(seconds=random_seconds)
-    return new_time
+
+    return start_time + timedelta(seconds=random_seconds)
 
 
-# This function will create a list of desired number of timestamps
-def random_timestamps(start_time, end_time, num_of_timestamps):
-    timestamps = []
+def generate_random_timestamps(
+    start_time: datetime,
+    end_time: datetime,
+    count: int,
+) -> list[datetime]:
+    """Generate multiple random timestamps.
 
-    for _ in range(num_of_timestamps):
-        timestamps.append(
-            iso8601_formatting(
-                generate_random_timestamp(start_time, end_time)
-            )
-        )
+    Args:
+        start_time: The earliest possible timestamp.
+        end_time: The latest possible timestamp.
+        count: Number of timestamps to generate.
 
-    return timestamps
+    Returns:
+        list[datetime]: A list of randomly generated timezone-aware
+        datetime objects.
 
+    Raises:
+        ValueError: If count is less than zero.
+    """
+    if count < 0:
+        raise ValueError("count must be greater than or equal to 0.")
 
-if __name__ == "__main__":
-    start = datetime(2026, 7, 1, 10, 0, 0, tzinfo=timezone.utc)
-    end = datetime(2026, 7, 1, 12, 0, 0, tzinfo=timezone.utc)
-
-    print(random_timestamps(start, end, 10))
+    return [
+        generate_random_timestamp(start_time, end_time)
+        for _ in range(count)
+    ]
