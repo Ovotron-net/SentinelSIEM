@@ -20,7 +20,7 @@ def generate_utc_timestamp() -> str:
     return datetime.now(timezone.utc).isoformat()
 @dataclass(slots=True)
 class Event:
-    sources: LogSource
+    source: LogSource
     event_type: str
     severity: Severity
     hostname: str | None
