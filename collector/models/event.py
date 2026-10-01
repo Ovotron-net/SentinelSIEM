@@ -9,8 +9,8 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Dict, Any
 import uuid
-from models import LogSource
-from models import Severity
+from .log_source import LogSource
+from .severity import Severity
 
 
 
@@ -20,8 +20,6 @@ def generate_utc_timestamp() -> str:
     return datetime.now(timezone.utc).isoformat()
 @dataclass(slots=True)
 class Event:
-    event_id: str = field(default_factory=generate_uuid_str)
-    timestamp: str = field(default_factory=generate_utc_timestamp)
     sources: LogSource
     event_type: str
     severity: Severity
@@ -30,4 +28,6 @@ class Event:
     source_ip: str | None
     destination_ip: str | None
     port: int | None
+    event_id: str = field(default_factory=generate_uuid_str)
+    timestamp: str = field(default_factory=generate_utc_timestamp)
     details: dict = field(default_factory=dict)
