@@ -8,7 +8,7 @@ There fields will be used to collect a event and make a JSON file to use it in p
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Dict, Any
-from uuid import uuid
+import uuid
 from models import LogSource
 from models import Severity
 
