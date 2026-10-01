@@ -6,18 +6,19 @@ These fields are used to collect an event and serialize it as JSON for the proce
 
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from typing import Dict, Any
 import uuid
+
+from ..utils.timestamp import format_iso8601, get_current_utc_timestamp
 from .log_source import LogSource
 from .severity import Severity
 
 
-
 def generate_uuid_str() -> str:
     return str(uuid.uuid4())
+
+
 def generate_utc_timestamp() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return format_iso8601(get_current_utc_timestamp())
 @dataclass(slots=True)
 class Event:
     source: LogSource
