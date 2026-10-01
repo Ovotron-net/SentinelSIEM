@@ -24,7 +24,7 @@ flowchart LR
     sources[Log Sources] -->|raw events| collector[Collector]
     collector -->|raw logs| processor[Processor]
     processor -->|structured events| detection[Detection Engine]
-    detection -->|events and alerts| database[(MongoDB)]
+    detection -->|events and alerts| backend
     backend[Backend API] <-->|query and persist| database
     frontend[Frontend Dashboard] -->|REST API requests| backend
 
@@ -127,9 +127,9 @@ flowchart TD
     processor --> detection{Detection rules match?}
     detection -->|yes| alert[Generate alert]
     detection -->|no| event[Keep processed event]
-    alert --> storage[(MongoDB stores events and alerts)]
-    event --> storage
-    storage --> api[Backend exposes REST API]
+    alert --> api[Backend API]
+    event --> api
+    api <-->|query and persist| storage[(MongoDB)]
     api --> dashboard[Dashboard displays logs and alerts]
 
     classDef step fill:#1f2937,stroke:#38bdf8,color:#f8fafc,stroke-width:2px
