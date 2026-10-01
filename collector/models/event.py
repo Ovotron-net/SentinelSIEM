@@ -1,7 +1,7 @@
 """
 It is the main event defining module which will be used to map events in SentinelSIEM.
 
-There fields will be used to collect a event and make a JSON file to use it in processor framework.
+These fields are used to collect an event and serialize it as JSON for the processor framework.
 """
 
 
