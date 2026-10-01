@@ -1,6 +1,6 @@
 """ Defines standardized severity levels used throughout SentinelSIEM.
 
-It has types declared in this files from the ascending point of view of it's urgency e.g., info,low medium,high,critical, etc. 
+Severity levels are declared in ascending order of urgency: info, low, medium, high, and critical.
 
 These severity levels provide a consistent way to classify security
 events across different log sources and processing components.
