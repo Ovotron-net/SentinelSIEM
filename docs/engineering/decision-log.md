@@ -73,6 +73,13 @@ The format is based on **Keep a Changelog**, and this project adheres to **Seman
 
 ---
 
+## [v0.1.3] - 2026-07-11
+
+### Decision
+
+* Adopted Python 3.13 as the minimum supported Python version.
+-> Allows SentinelSIEM to leverage modern Python features such as StrEnum, improved typing, and recent  standard library enhancements while keeping the codebase clean and dependency-free.
+
 <!--
 Release Format
 
