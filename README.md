@@ -107,24 +107,40 @@ cd ../frontend && npm install
 cd ../processor && npm install
 ```
 
-### 4. Run the services
+### 4. Start MongoDB with Docker Compose
 
-**Option A — Docker Compose (recommended for local development):**
+The current Compose setup runs MongoDB, which the application uses for storage. It does not yet build or run the backend, processor, or frontend; run those from the source checkout once their modules are implemented.
 
 ```bash
-docker compose up --build
+docker compose up -d
+docker compose ps
 ```
 
-**Option B — Run modules individually:**
+The database is available at `mongodb://localhost:27017/sentinelsiem`. Set `MONGO_URI` in `.env` to this value when running application modules on your host. This development database has no authentication enabled and is bound to localhost; do not change the bind address or expose it to untrusted networks.
+
+To stop the container while keeping its data:
 
 ```bash
-# In separate terminals
+docker compose down
+```
+
+To also delete the stored database data:
+
+```bash
+docker compose down --volumes
+```
+
+### 5. Run application modules
+
+Run each module from its own terminal:
+
+```bash
 cd backend && npm start
 cd processor && npm start
 cd frontend && npm start
 ```
 
-The backend API will be available at `http://localhost:5000` (or the `PORT` you configured), and the frontend dashboard will be served on its own local port.
+The backend API will be available at `http://localhost:5000` (or the `PORT` you configured), and the frontend dashboard will be served on its own local port when those modules are implemented.
 
 ## Project Structure Notes
 
