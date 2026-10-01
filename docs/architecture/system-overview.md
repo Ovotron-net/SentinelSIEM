@@ -18,7 +18,21 @@ The project aims to simulate the core functionality of enterprise SIEM solutions
 
 ## High-Level Architecture
 
-<img src="../diagrams/architecture_system_diagram.png" alt="Architecture Diagram" height="450">
+```mermaid
+%%{init: {"theme": "dark"}}%%
+flowchart LR
+    sources[Log Sources] -->|raw events| collector[Collector]
+    collector -->|raw logs| processor[Processor]
+    processor -->|structured events| detection[Detection Engine]
+    detection -->|events and alerts| database[(MongoDB)]
+    backend[Backend API] <-->|query and persist| database
+    frontend[Frontend Dashboard] -->|REST API requests| backend
+
+    classDef component fill:#1f2937,stroke:#38bdf8,color:#f8fafc,stroke-width:2px
+    classDef storage fill:#312e81,stroke:#a78bfa,color:#f8fafc,stroke-width:2px
+    class sources,collector,processor,detection,backend,frontend component
+    class database storage
+```
 
 ---
 
@@ -104,6 +118,27 @@ Features:
 ---
 
 ## Data Flow
+
+```mermaid
+%%{init: {"theme": "dark"}}%%
+flowchart TD
+    source[Security Event] --> collector[Collector receives event]
+    collector --> processor[Processor parses and normalizes]
+    processor --> detection{Detection rules match?}
+    detection -->|yes| alert[Generate alert]
+    detection -->|no| event[Keep processed event]
+    alert --> storage[(MongoDB stores events and alerts)]
+    event --> storage
+    storage --> api[Backend exposes REST API]
+    api --> dashboard[Dashboard displays logs and alerts]
+
+    classDef step fill:#1f2937,stroke:#38bdf8,color:#f8fafc,stroke-width:2px
+    classDef decision fill:#713f12,stroke:#fbbf24,color:#f8fafc,stroke-width:2px
+    classDef storage fill:#312e81,stroke:#a78bfa,color:#f8fafc,stroke-width:2px
+    class source,collector,processor,alert,event,api,dashboard step
+    class detection decision
+    class storage storage
+```
 
 1. Log source creates a security event.
 
