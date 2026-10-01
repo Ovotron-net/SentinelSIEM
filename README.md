@@ -130,17 +130,9 @@ To also delete the stored database data:
 docker compose down --volumes
 ```
 
-### 5. Run application modules
+### 5. Application modules (unavailable)
 
-Run each module from its own terminal:
-
-```bash
-cd backend && npm start
-cd processor && npm start
-cd frontend && npm start
-```
-
-The backend API will be available at `http://localhost:5000` (or the `PORT` you configured), and the frontend dashboard will be served on its own local port when those modules are implemented.
+The backend, processor, and frontend are currently placeholders and cannot be started yet. The current setup provides MongoDB only.
 
 ## Project Structure Notes
 
