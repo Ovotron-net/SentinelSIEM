@@ -73,7 +73,7 @@ The format is based on **Keep a Changelog**, and this project adheres to **Seman
 
 ---
 
-## [v0.1.0] - 2026-07-11 (YYYY-MM-DD)
+## [v0.1.3] - 2026-07-11
 
 ### Decision
 
