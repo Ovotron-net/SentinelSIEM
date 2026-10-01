@@ -1,6 +1,7 @@
 import ipaddress
 import re
 import unittest
+from unittest.mock import patch
 
 from collector.utils.random_data import (
     generate_random_hostname,
@@ -18,6 +19,12 @@ class RandomDataTests(unittest.TestCase):
         self.assertEqual(
             ipaddress.ip_address(generate_random_ip(version=6)).version, 6
         )
+
+    def test_generates_ipv6_when_random_value_fits_in_ipv4_range(self) -> None:
+        with patch("collector.utils.random_data.random.getrandbits", return_value=1):
+            address = generate_random_ip(version=6)
+
+        self.assertEqual(ipaddress.ip_address(address).version, 6)
 
     def test_rejects_unsupported_ip_version(self) -> None:
         with self.assertRaises(ValueError):

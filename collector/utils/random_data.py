@@ -32,7 +32,8 @@ def generate_random_ip(version: int = 4) -> str:
         raise ValueError("version must be 4 or 6.")
 
     bit_count = 32 if version == 4 else 128
-    return str(ipaddress.ip_address(random.getrandbits(bit_count)))
+    address_type = ipaddress.IPv4Address if version == 4 else ipaddress.IPv6Address
+    return str(address_type(random.getrandbits(bit_count)))
 
 
 def select_random_username() -> str:
